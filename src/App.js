@@ -9,7 +9,7 @@ class App extends React.Component {
   state = {
     activePage: 'Home',
     posts: [],
-    isLoading: false
+    isLoading: false,
   };
 
   componentDidMount(){
@@ -37,7 +37,7 @@ class App extends React.Component {
     return (
       <div className='background-color'>      
       
-        <Navbar currentPage={(page) => {
+        <Navbar posts={this.state.posts} currentPage={(page) => {
           this.setState({
             activePage: page,
           });
@@ -46,7 +46,7 @@ class App extends React.Component {
         <div>
           {this.state.isLoading ? (<p className='text-center'>Loading...</p>) : (
             <>
-              {this.state.activePage === 'Home' && <Home posts={this.state.posts}/>}
+              {this.state.activePage === 'Home' && <Home posts={this.state.posts} />}
               {this.state.activePage === 'Favorites' && <Favorites />}
             </>
           )}
