@@ -54,7 +54,7 @@ export default class Home extends Component {
                         </Card.Body> */}
                     </Card>
                 ))}
-                {this.returnDataPosts().length === 0 && <h1 className="d-flex align-items-center" style={{height: '82.4vh'}}>Search not found...</h1>}
+                {this.returnDataPosts().length === 0 && <h1 className="d-flex align-items-center">Search not found...</h1>}
             </div>
         );
     }

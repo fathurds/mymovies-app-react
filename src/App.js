@@ -37,7 +37,7 @@ class App extends React.Component {
     return (
       <div className='background-color'>      
       
-        <Navbar posts={this.state.posts} currentPage={(page) => {
+        <Navbar currentPage={(page) => {
           this.setState({
             activePage: page,
           });
