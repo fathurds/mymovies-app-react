@@ -1,60 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import './App.css';
 import axios from "axios";
 import Navbar from "./components/Navbar.js"
 import Home from "./pages/Home.js"
 import Favorites from './pages/Favorites.js';
+import Detail from "./pages/Detail.js"
 
-class App extends React.Component {
-  state = {
-    activePage: 'Home',
-    posts: [],
-    isLoading: false,
-  };
+// SUDAH BENAR
+function App() {
+  const [activePage, setActivePage] = useState("Home");
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  componentDidMount(){
-    this.setState({
-      isLoading: true
-    })
+  useEffect(() => {
+    setIsLoading(true);
 
     axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=fe9c2107e7e76afb20fd484f3d893e7f&language=en-US&page=1')
       .then(data => {
-        this.setState({
-          posts: data.data.results
-        })
+        setPosts(data.data.results);
       })
       .catch(err => {
         console.log(err, 'ini error dari catch');
       })
       .finally(() => {
-        this.setState({
-          isLoading: false
-        })
-      })
-  }
+        setIsLoading(false)
+      });
 
-  render() {
-    return (
-      <div className='background-color'>      
-      
-        <Navbar currentPage={(page) => {
-          this.setState({
-            activePage: page,
-          });
-        }}/>
+  }, [])
+
+  return (
+    <BrowserRouter>
+      <div className='background-color'>
+        <Navbar />
 
         <div>
-          {this.state.isLoading ? (<p className='text-center'>Loading...</p>) : (
-            <>
-              {this.state.activePage === 'Home' && <Home posts={this.state.posts} />}
-              {this.state.activePage === 'Favorites' && <Favorites />}
-            </>
+          {isLoading ? (<p className='text-center'>Loading...</p>) : (
+            <Routes>
+              <Route path="/" element={<Home posts={posts} />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/detail/:id" element={<Detail />} />
+            </Routes>
           )}
         </div>
       </div>
-    );
-  }
-  
+    </BrowserRouter>
+  );
 }
 
 export default App;
