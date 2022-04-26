@@ -7,7 +7,7 @@ import SimilarMovies from "../components/SimilarMovies";
 
 function Detail() {
     const [dataDetail, setDataDetail] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
 
     useEffect(() => {
