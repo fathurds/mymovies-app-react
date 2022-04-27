@@ -1,28 +1,35 @@
 import React from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { useSelector, useDispatch } from 'react-redux';
+import { Card, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import "../styles/Favorites.css";
+import { removeFavorite } from "../store/favorites";
 
-class Favorites extends React.Component {
-    render() {
-        return (
-            <Container>
-                <Row xs={2} md={3} lg={6} className='my-3 d-flex justify-content-evenly'>
-                <Col>
-                    <Image fluid src="https://image.tmdb.org/t/p/w500//74xTEgt7R36Fpooo50r9T25onhq.jpg"></Image>
-                </Col>
-                <Col>
-                    <Image fluid src="https://image.tmdb.org/t/p/w500//qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg"></Image>
-                </Col>
-                <Col>
-                    <Image fluid src="https://image.tmdb.org/t/p/w500//6nhwr1LCozBiIN47b8oBEomOADm.jpg"></Image>
-                </Col>
-                <Col>
-                    <Image fluid src="https://image.tmdb.org/t/p/w500//sqLowacltbZLoCa4KYye64RvvdQ.jpg"></Image>
-                </Col>
-                </Row>
-            </Container>
-        )
-    }
+function Favorites() {
+
+    const listFavorites = useSelector(state => state.favorite.favorites);
+
+    const navigate = useNavigate();
+
+    const dispact = useDispatch();
+
+    return (
+        <div className="d-flex justify-content-around flex-wrap">
+            {listFavorites.map((el, i) => (
+                <Card className="m-2" style={{ width: '15rem' }} key={i}>
+                    <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} onClick={() => {
+                        navigate('/detail/' + el.id);
+                    }} />
+                    <Card.Body>
+                        <Button className="w-100" variant="danger" onClick={() => {
+                            dispact(removeFavorite(el.id))
+                        }} >Remove from Favorites</Button>
+                    </Card.Body>
+                </Card>
+            ))}
+            {listFavorites.length === 0 && <h1 className="d-flex align-items-center">Not data found...</h1>}
+        </div>
+    )
 }
 
 export default Favorites;

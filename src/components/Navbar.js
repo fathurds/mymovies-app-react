@@ -24,9 +24,6 @@ function NavbarComponent(){
                 <Nav.Link active={currentPage === 'Favorites'} onClick={() => {
                     setCurrentPage("Favorites");
                 }}><Link to="/favorites">Favorites</Link></Nav.Link>
-                <Nav.Link active={currentPage === 'Detail'} onClick={() => {
-                    setCurrentPage("Detail");
-                }}><Link to="/detail">Detail</Link></Nav.Link>
             </Nav>
             {/* <Form className="d-flex mx-5">
                 <FormControl

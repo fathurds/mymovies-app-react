@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import "../styles/Detail.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import SimilarMovies from "../components/SimilarMovies";
+// import SimilarMovies from "../components/SimilarMovies";
 
 function Detail() {
     const [dataDetail, setDataDetail] = useState(null);
@@ -34,13 +34,13 @@ function Detail() {
         <>
             <Row className="m-5">
                 <Col lg="5" className="text-center">
-                    <img src={"https://image.tmdb.org/t/p/w500" + dataDetail.poster_path} width={"400px"}></img>
+                    <img src={"https://image.tmdb.org/t/p/w500" + dataDetail.poster_path} width={"400px"} alt="Poster"></img>
                 </Col>
                 <Col className="px-5">
                     <h1>{dataDetail.title}</h1>
                     <hr></hr>
                     <h5>Genre : {dataDetail.genres.map((el, i) => {
-                        if (i == dataDetail.genres.length - 1) {
+                        if (i === dataDetail.genres.length - 1) {
                             return dataDetail.genres[i].name;
                         }
                         return dataDetail.genres[i].name + ', ';
@@ -51,7 +51,7 @@ function Detail() {
                     <h5>Duration: {Math.floor(dataDetail.runtime / 60)} hour {dataDetail.runtime % 60} minutes</h5>
                     <hr></hr>
                     <h5>Production Companies : {dataDetail.production_companies.map((el, i) => {
-                        if (i == dataDetail.production_companies.length - 1) {
+                        if (i === dataDetail.production_companies.length - 1) {
                             return dataDetail.production_companies[i].name;
                         }
                         return dataDetail.production_companies[i].name + ', ';
