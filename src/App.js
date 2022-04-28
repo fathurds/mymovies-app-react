@@ -9,7 +9,6 @@ import Detail from "./pages/Detail.js"
 
 // SUDAH BENAR
 function App() {
-  const [activePage, setActivePage] = useState("Home");
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,21 +29,21 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <div className='background-color'>
-        <Navbar />
+      <BrowserRouter>
+        <div className='background-color'>
+          <Navbar />
 
-        <div>
-          {isLoading ? (<p className='text-center'>Loading...</p>) : (
-            <Routes>
-              <Route path="/" element={<Home posts={posts} />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/detail/:id" element={<Detail />} />
-            </Routes>
-          )}
+          <div>
+            {isLoading ? (<p className='text-center'>Loading...</p>) : (
+              <Routes>
+                <Route path="/" element={<Home posts={posts} />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/detail/:id" element={<Detail />} />
+              </Routes>
+            )}
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
   );
 }
 

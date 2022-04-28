@@ -3,27 +3,34 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
-function NavbarComponent(){
+function NavbarComponent() {
     const [currentPage, setCurrentPage] = useState("Home");
 
     return (
         <Navbar bg="dark" variant="dark" className='py-3 ps-5 border-danger border-bottom'>
             <Navbar.Brand href="#home">
-                <img
-                    alt=""
-                    src="https://react-bootstrap.github.io/logo.svg"
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                />
+                <Nav.Link active={currentPage === 'Home'} onClick={() => {
+                    setCurrentPage("Home");
+                }}>
+                    <Link className="navbar-text" to="/">
+                        <img
+                            alt=""
+                            src="https://react-bootstrap.github.io/logo.svg"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />
+                    </Link>
+                </Nav.Link>
+
             </Navbar.Brand>
             <Nav className="me-auto">
                 <Nav.Link active={currentPage === 'Home'} onClick={() => {
                     setCurrentPage("Home");
-                }}><Link to="/">Home</Link></Nav.Link>
+                }}><Link className="navbar-text" to="/">Home</Link></Nav.Link>
                 <Nav.Link active={currentPage === 'Favorites'} onClick={() => {
                     setCurrentPage("Favorites");
-                }}><Link to="/favorites">Favorites</Link></Nav.Link>
+                }}><Link className="navbar-text" to="/favorites">Favorites</Link></Nav.Link>
             </Nav>
             {/* <Form className="d-flex mx-5">
                 <FormControl

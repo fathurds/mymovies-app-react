@@ -14,7 +14,7 @@ function Favorites() {
     const dispact = useDispatch();
 
     return (
-        <div className="d-flex justify-content-around flex-wrap">
+        <div className="d-flex justify-content-around flex-wrap py-5">
             {listFavorites.map((el, i) => (
                 <Card className="m-2" style={{ width: '15rem' }} key={i}>
                     <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} onClick={() => {
