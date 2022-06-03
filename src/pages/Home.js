@@ -1,36 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFavorite, setFavorites } from '../store/favorites'
 import { Card, FormControl, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
-function Home(props) {
+function Home() {
     const [searchInput, setSearchInput] = useState("");
     const [filteredPosts, setFilteredPosts] = useState([]);
 
     const navigate = useNavigate();
 
-    const listFavorites = useSelector(state => state.favorite.favorites);
-    const dispact = useDispatch();
+    const listFavorites = useSelector(state => state.favorite.favorites); // ambil data dari store
+    const listMovies = useSelector(state => state.posts.posts); // ambil data dari store
+    const listFilteredMovies = useSelector(state => state.posts.filteredPosts);
+    const dispact = useDispatch(); // menambahkan ke store
 
-    const handleSearchPosts = (input) => {
-        const filter = props.posts.filter((el) => {
-            if (el.title.toLowerCase().indexOf(input.toLowerCase()) > -1 || el.original_title.toLowerCase().indexOf(input.toLowerCase()) > -1 || el.overview.toLowerCase().indexOf(input.toLowerCase()) > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        })
-
-        setFilteredPosts(filter);
-    }
+    useEffect(() => {
+        console.log(listFilteredMovies);
+    }, [listFilteredMovies])
 
     const returnDataPosts = () => {
-        if (searchInput.length > 0) {
-            return filteredPosts;
+        if (listFilteredMovies.length > 0) {
+            return listFilteredMovies;
         } else {
-            return props.posts;
+            return listMovies;
         }
     }
 
@@ -45,16 +39,6 @@ function Home(props) {
 
     return (
         <div className="d-flex justify-content-around flex-wrap">
-            <FormControl
-                type="search"
-                placeholder="Search"
-                className="m-3"
-                aria-label="Search"
-                onChange={(e) => {
-                    setSearchInput(e.target.value);
-                    handleSearchPosts(e.target.value);
-                }}
-            />
             {returnDataPosts().map((el, i) => (
                 <Card className="m-2" style={{ width: '15rem' }} key={i}>
                     <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} onClick={() => {
