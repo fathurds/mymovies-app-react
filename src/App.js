@@ -34,22 +34,22 @@ function App() {
   }, [dispact])
 
   return (
-      <BrowserRouter>
-        <div className='background-color'>
-          <Navbar />
+    <BrowserRouter>
+      <div className='background-color'>
+        <Navbar />
 
-          <div>
-            {isLoading ? (<p className='text-center'>Loading...</p>) : (
-              <Routes>
-                <Route path="/" element={<Home posts={[]} />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/detail/:id" element={<Detail />} />
-              </Routes>
-            )}
-          </div>
+        <div>
+          {isLoading ? (<p className='text-center'>Loading...</p>) : (
+            <Routes>
+              <Route path="/" element={<Home posts={[]} />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/detail/:id" element={<Detail />} />
+            </Routes>
+          )}
         </div>
-      </BrowserRouter>
+      </div>
+    </BrowserRouter>
   );
 }
 
