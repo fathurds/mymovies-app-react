@@ -5,6 +5,7 @@ import "../styles/Navbar.css";
 
 function NavbarComponent() {
     const [search, setSearch] = useState('');
+    const [disableButton, setDisableButton] = useState(true);
 
     const navigate = useNavigate();
 
@@ -39,9 +40,16 @@ function NavbarComponent() {
                     className="me-2 rounded-pill border-dark text-white-50 navbar-search"
                     aria-label="Search"
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                        if (e.target.value.length > 0) {
+                            setDisableButton(false);
+                        } else {
+                            setDisableButton(true);
+                        }
+                    }}
                 />
-                <Button variant="outline-primary" type='submit'>Search</Button>
+                <Button variant="outline-primary" type='submit' disabled={disableButton} >Search</Button>
             </Form>
         </Navbar>
     );

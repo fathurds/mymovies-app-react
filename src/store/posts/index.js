@@ -6,6 +6,7 @@ export const postSlice = createSlice({
         filteredPosts: [],
         posts: [],
         search: [],
+        detail: []
     },
     reducers: {
         setPosts: (state, action) => {
@@ -16,10 +17,13 @@ export const postSlice = createSlice({
         },
         setSearchGlobal: (state, action) => {
             state.search = action.payload;
+        },
+        setDetail: (state, action) => {
+            state.detail = action.payload;
         }
     }
 })
 
-export const { setPosts, setFilteredPosts, setSearchGlobal } = postSlice.actions;
+export const { setPosts, setFilteredPosts, setSearchGlobal, setDetail } = postSlice.actions;
 
 export default postSlice.reducer;

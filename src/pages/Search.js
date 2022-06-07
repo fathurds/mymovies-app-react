@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/Home.css";
 import axios from 'axios';
 import { setFilteredPosts } from '../store/posts'
+import { setDetail } from '../store/posts'
 
 function Search() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ function Search() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        document.title = `Search "${title}" | Fath Movies`
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=fe9c2107e7e76afb20fd484f3d893e7f&language=en-US&page=1&include_adult=false&query=${title}`)
             .then(data => {
                 dispatch(setFilteredPosts(data.data.results));
@@ -26,6 +28,16 @@ function Search() {
             })
     }, [title, dispatch]);
 
+    const setVote = (vote) => {
+        if (vote >= 8) {
+            return 'text-success';
+        } else if (vote >= 6) {
+            return 'text-warning';
+        } else {
+            return 'text-danger';
+        }
+    };
+
     return (
         <div className="p-3">
             {listFilteredMovies.length !== 0 && (<h2>Search "{title}"</h2>)}
@@ -33,13 +45,14 @@ function Search() {
                 {listFilteredMovies.length === 0 && (<h2>Search Not Found</h2>)}
                 {listFilteredMovies.map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '15rem' }} key={i} onClick={() => {
+                        dispatch(setDetail(el.title));
                         navigate('/detail/' + el.id);
                     }} >
                         <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} />
                         <Card.Body className="card-body-color">
                             <div className="d-flex justify-content-between align-items-center gap-2">
                                 <h6 className="text-light">{el.title}</h6>
-                                <h6>{el.vote_average}</h6>
+                                <h6 className={setVote(el.vote_average)}>{el.vote_average}</h6>
                             </div>
 
                             <div className="movie-over px-2">

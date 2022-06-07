@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Card, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,20 @@ function Favorites() {
 
     const dispact = useDispatch();
 
+    useEffect(()=> {
+        document.title = 'Favorites | Fath Movies'
+    })
+
+    const setVote = (vote) => {
+        if (vote >= 8) {
+            return 'text-success';
+        } else if (vote >= 6) {
+            return 'text-warning';
+        } else {
+            return 'text-danger';
+        }
+    };
+
     return (
         <div className="d-flex justify-content-around align-items-center flex-wrap py-5 search-not-found">
             {listFavorites.map((el, i) => (
@@ -23,7 +37,7 @@ function Favorites() {
                     <Card.Body className="card-body-color">
                         <div className="d-flex justify-content-between align-items-center gap-2">
                             <h6 className="text-light">{el.title}</h6>
-                            <h6>{el.vote_average}</h6>
+                            <h6 className={setVote(el.vote_average)}>{el.vote_average}</h6>
                         </div>
 
                         <div className="movie-over-favorites px-2">
