@@ -28,8 +28,9 @@ function Search() {
 
     return (
         <div className="p-3">
-            <h2>Search "{title}"</h2>
-            <div className="d-flex justify-content-around flex-wrap gap-3 mt-3">
+            {listFilteredMovies.length !== 0 && (<h2>Search "{title}"</h2>)}
+            <div className="d-flex justify-content-around align-items-center flex-wrap gap-3 mt-3 search-not-found">
+                {listFilteredMovies.length === 0 && (<h2>Search Not Found</h2>)}
                 {listFilteredMovies.map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '15rem' }} key={i} onClick={() => {
                         navigate('/detail/' + el.id);
