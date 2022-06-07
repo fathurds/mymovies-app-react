@@ -1,0 +1,25 @@
+.card-body-color {
+    background-color: #50507b;
+}
+
+.movie {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.movie-over {
+    background-color: #50507b;
+    position: absolute;
+    overflow: hidden;
+    max-height: 70%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(101%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.movie:hover .movie-over {
+    transform: translateY(0%);
+}

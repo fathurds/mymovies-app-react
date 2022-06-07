@@ -1,0 +1,24 @@
+.search-not-found {
+    min-height: 85vh;
+}
+
+.movie-favorites {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.movie-over-favorites {
+    position: absolute;
+    overflow: hidden;
+    max-height: 70%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(101%);
+    transition: transform 0.2s ease-in-out;
+}
+
+.movie-favorites:hover .movie-over-favorites {
+    transform: translateY(-20%);
+}

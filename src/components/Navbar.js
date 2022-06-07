@@ -1,69 +1,47 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
-import { setFilteredPosts } from "../store/posts";
 
 function NavbarComponent() {
-    const [currentPage, setCurrentPage] = useState("Home");
+    const [search, setSearch] = useState('');
 
-    const listMovies = useSelector(state => state.posts.posts);
-    const dispact = useDispatch();
+    const navigate = useNavigate();
 
-    const handleSearchPosts = (input) => {
-        if (input.length === 0) {
-            dispact(setFilteredPosts([]));
-        } else {
-            const filter = listMovies.filter((el) => {
-                if (el.title.toLowerCase().indexOf(input.toLowerCase()) > -1 || el.original_title.toLowerCase().indexOf(input.toLowerCase()) > -1 || el.overview.toLowerCase().indexOf(input.toLowerCase()) > -1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            })
-    
-            dispact(setFilteredPosts(filter));
-        }
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+
+        navigate(`/search?title=${search}`);
     }
 
     return (
         <Navbar bg="dark" variant="dark" className='py-3 ps-5 border-danger border-bottom'>
-            <Navbar.Brand href="#home">
-                <Nav.Link active={currentPage === 'Home'} onClick={() => {
-                    setCurrentPage("Home");
-                }}>
-                    <Link className="navbar-text" to="/">
-                        <img
-                            alt=""
-                            src="https://react-bootstrap.github.io/logo.svg"
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                        />
-                    </Link>
+            <Navbar.Brand onClick={() => setSearch('')}>
+                <Nav.Link as={Link} className="navbar-text" to="/">
+                    <img
+                        alt=""
+                        src="https://react-bootstrap.github.io/logo.svg"
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                    />
                 </Nav.Link>
 
             </Navbar.Brand>
             <Nav className="me-auto">
-                <Nav.Link active={currentPage === 'Home'} onClick={() => {
-                    setCurrentPage("Home");
-                }}><Link className="navbar-text" to="/">Home</Link></Nav.Link>
-                <Nav.Link active={currentPage === 'Favorites'} onClick={() => {
-                    setCurrentPage("Favorites");
-                }}><Link className="navbar-text" to="/favorites">Favorites</Link></Nav.Link>
+                <Nav.Link as={Link} className="navbar-text" to="/" onClick={() => setSearch('')}>Home</Nav.Link>
+                <Nav.Link as={Link} className="navbar-text" to="/favorites" onClick={() => setSearch('')}>Favorites</Nav.Link>
             </Nav>
-            <Form className="d-flex mx-5">
+            <Form className="d-flex mx-5" onSubmit={handleOnSubmit}>
                 <FormControl
                     type="search"
-                    placeholder="Search"
-                    className="me-2"
+                    placeholder="Search Movie..."
+                    className="me-2 rounded-pill border-dark text-white-50 navbar-search"
                     aria-label="Search"
-                    onChange={(e) => {
-                        handleSearchPosts(e.target.value);
-                    }}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
-                <Button variant="outline-primary">Search</Button>
+                <Button variant="outline-primary" type='submit'>Search</Button>
             </Form>
         </Navbar>
     );

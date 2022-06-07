@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import "../styles/Detail.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-// import SimilarMovies from "../components/SimilarMovies";
+import { removeFavorite, setFavorites } from '../store/favorites'
+import { useDispatch, useSelector } from 'react-redux';
+import moment from "moment";
 
 function Detail() {
     const [dataDetail, setDataDetail] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
+
+    const listFavorites = useSelector(state => state.favorite.favorites); // ambil data dari store
+    const dispact = useDispatch(); // menambahkan ke store
 
     useEffect(() => {
         setIsLoading(true);
@@ -26,6 +31,15 @@ function Detail() {
 
     }, [params]);
 
+    const addOrRemoveFavorite = (id) => {
+        const findIndex = listFavorites.findIndex((el) => el.id === id);
+        if (findIndex >= 0) {
+            return 'Remove from Favorites'
+        } else {
+            return 'Add to Favorites'
+        }
+    }
+
     if (isLoading) {
         return <h4>Now Loading...</h4>
     }
@@ -39,29 +53,41 @@ function Detail() {
                 <Col className="px-5">
                     <h1>{dataDetail.title}</h1>
                     <hr></hr>
-                    <h5>Genre : {dataDetail.genres.map((el, i) => {
+                    <h5>Genre : </h5>
+                    <h6>{dataDetail.genres.map((el, i) => {
                         if (i === dataDetail.genres.length - 1) {
                             return dataDetail.genres[i].name;
                         }
                         return dataDetail.genres[i].name + ', ';
-                    })}</h5>
+                    })}</h6>
                     <hr></hr>
-                    <h5>Release Date: {dataDetail.release_date}</h5>
+                    <h5>Release Date:</h5>
+                    <h6>{moment(dataDetail.release_date).format('LL')}</h6>
                     <hr></hr>
-                    <h5>Duration: {Math.floor(dataDetail.runtime / 60)} hour {dataDetail.runtime % 60} minutes</h5>
+                    <h5>Duration:</h5>
+                    <h6>{Math.floor(dataDetail.runtime / 60)} hour {dataDetail.runtime % 60} minutes</h6>
                     <hr></hr>
-                    <h5>Production Companies : {dataDetail.production_companies.map((el, i) => {
+                    <h5>Production Companies :</h5>
+                    <h6>{dataDetail.production_companies.map((el, i) => {
                         if (i === dataDetail.production_companies.length - 1) {
                             return dataDetail.production_companies[i].name;
                         }
                         return dataDetail.production_companies[i].name + ', ';
-                    })}</h5>
+                    })}</h6>
                     <hr></hr>
-                    <h5>Status: {dataDetail.status}</h5>
+                    <h5>Status:</h5>
+                    <h6>{dataDetail.status}</h6>
                     <hr></hr>
                     <h5>Overview: </h5>
                     <p>{dataDetail.overview}</p>
                     <hr></hr>
+                    <Button className="w-100" variant="danger" onClick={() => {
+                        if (addOrRemoveFavorite(dataDetail.id) === 'Add to Favorites') {
+                            dispact(setFavorites(dataDetail))
+                        } else {
+                            dispact(removeFavorite(dataDetail.id))
+                        }
+                    }} >{addOrRemoveFavorite(dataDetail.id)}</Button>
                 </Col>
             </Row>
         </>
