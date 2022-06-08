@@ -28,7 +28,7 @@ function Home() {
     return (
         <div className="p-3">
             <h2>Now Playing</h2>
-            <div className="d-flex justify-content-around flex-wrap gap-3 mt-3">
+            <div className="d-flex justify-content-around flex-wrap gap-3 mt-3 mb-2">
                 {listMovies.map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '15rem' }} key={i} onClick={() => {
                         dispacth(setDetail(el.title));
