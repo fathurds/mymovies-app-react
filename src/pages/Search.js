@@ -1,19 +1,32 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+
 import { Card } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/Home.css";
+import axios from 'axios';
+import { setFilteredPosts } from '../store/posts'
 import { setDetail } from '../store/posts'
 
-function Home() {
+function Search() {
     const navigate = useNavigate();
 
-    const listMovies = useSelector(state => state.posts.posts); // ambil data dari store
-    const dispacth = useDispatch();
+    const [searchParams] = useSearchParams();
+    const title = searchParams.get('title')
+
+    const listFilteredMovies = useSelector(state => state.posts.filteredPosts);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        document.title = "Home | Fath Movies"
-    })
+        document.title = `Search "${title}" | Fath Movies`
+        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=fe9c2107e7e76afb20fd484f3d893e7f&language=en-US&page=1&include_adult=false&query=${title}`)
+            .then(data => {
+                dispatch(setFilteredPosts(data.data.results));
+            })
+            .catch(err => {
+                console.log(err, ' ==> error dari search');
+            })
+    }, [title, dispatch]);
 
     const setVote = (vote) => {
         if (vote >= 8) {
@@ -27,11 +40,12 @@ function Home() {
 
     return (
         <div className="p-3">
-            <h2>Now Playing</h2>
-            <div className="d-flex justify-content-around flex-wrap gap-3 mt-3 mb-2">
-                {listMovies.map((el, i) => (
+            {listFilteredMovies.length !== 0 && (<h2>Search "{title}"</h2>)}
+            <div className="d-flex justify-content-around align-items-center flex-wrap gap-3 mt-3 search-not-found">
+                {listFilteredMovies.length === 0 && (<h2>Search Not Found</h2>)}
+                {listFilteredMovies.map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '15rem' }} key={i} onClick={() => {
-                        dispacth(setDetail(el.title));
+                        dispatch(setDetail(el.title));
                         navigate('/detail/' + el.id);
                     }} >
                         <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} />
@@ -50,7 +64,7 @@ function Home() {
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default Home;
+export default Search
