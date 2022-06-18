@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navbar, Nav, Form, FormControl, Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
-import logo from "../images/logo-mymovies2.png";
+import logo from "../logo-mymovies2.png";
 
 function NavbarComponent() {
     const [search, setSearch] = useState('');
@@ -19,7 +19,7 @@ function NavbarComponent() {
     return (
         <Navbar bg="dark" variant="dark" expand='lg' className='border-danger border-bottom'>
             <Container fluid>
-                <Navbar.Brand onClick={() => setSearch('')}>
+                <Navbar.Brand>
                     <Nav.Link as={Link} className="navbar-text d-flex align-items-center gap-2" to="/">
                         <img
                             alt=""
