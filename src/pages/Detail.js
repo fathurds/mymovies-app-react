@@ -17,13 +17,10 @@ function Detail() {
     const params = useParams();
 
     const listFavorites = useSelector(state => state.favorite.favorites); // ambil data dari store
-    const detailTitle = useSelector(state => state.posts.detail);
     const dispacth = useDispatch(); // menambahkan ke store
 
     useEffect(() => {
-        document.title = `${detailTitle} | Fath Movies`
-
-        setIsLoading(true);
+        document.title = 'Fath Movies';
 
         axios.get('https://api.themoviedb.org/3/movie/' + params.id + '?api_key=fe9c2107e7e76afb20fd484f3d893e7f&language=en-US')
             .then(data => {
@@ -44,7 +41,7 @@ function Detail() {
                 console.log(err, ' ==> error dari similar movies')
             })
 
-    }, [params, detailTitle]);
+    }, [params]);
 
     const addOrRemoveFavorite = (id) => {
         const findIndex = listFavorites.findIndex((el) => el.id === id);
@@ -69,11 +66,15 @@ function Detail() {
         return <h4>Now Loading...</h4>
     }
 
+    if (dataDetail) {
+        document.title = `${dataDetail.title} | Fath Movies`
+    }
+
     return (
         <Container>
-            <Row className="mt-4">
+            <Row className="my-4 gap-4">
                 <Col lg="5" className="text-center">
-                    <img src={"https://image.tmdb.org/t/p/w500" + dataDetail.poster_path} width={"400px"} alt="Poster"></img>
+                    <img src={"https://image.tmdb.org/t/p/w500" + dataDetail.poster_path} className="detail-image" alt="Poster"></img>
                 </Col>
                 <Col>
                     <h1>{dataDetail.title}</h1>
@@ -137,6 +138,8 @@ function Detail() {
                     </Card>
                 ))}
             </div>
+
+            {/* MOBILE */}
             <div className="justify-content-around flex-wrap gap-3 mt-3 list-mobile">
                 {similarMovies.slice(0, 5).map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '10rem' }} key={i} onClick={() => {
@@ -144,7 +147,7 @@ function Detail() {
                         navigate('/detail/' + el.id);
                     }} >
                         <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} />
-                        
+
                     </Card>
                 ))}
             </div>

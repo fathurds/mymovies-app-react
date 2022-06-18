@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navbar, Nav, Form, FormControl, Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
+import logo from "../images/logo-mymovies2.png";
 
 function NavbarComponent() {
     const [search, setSearch] = useState('');
@@ -22,7 +23,7 @@ function NavbarComponent() {
                     <Nav.Link as={Link} className="navbar-text d-flex align-items-center gap-2" to="/">
                         <img
                             alt=""
-                            src="logo-mymovies2.png"
+                            src={logo}
                             width="50"
                             height="50"
                             className="d-inline-block align-top"
@@ -35,8 +36,8 @@ function NavbarComponent() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} className="navbar-text" to="/" onClick={() => setSearch('')}>Home</Nav.Link>
-                        <Nav.Link as={Link} className="navbar-text" to="/favorites" onClick={() => setSearch('')}>Favorites</Nav.Link>
+                        <Nav.Link as={Link} className="navbar-text" to="/">Home</Nav.Link>
+                        <Nav.Link as={Link} className="navbar-text" to="/favorites">Favorites</Nav.Link>
                     </Nav>
                     <Form className="d-flex mx-5" onSubmit={handleOnSubmit}>
                         <FormControl

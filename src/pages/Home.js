@@ -58,7 +58,17 @@ function Home() {
                         navigate('/detail/' + el.id);
                     }} >
                         <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} />
-                        
+                        <Card.Body className="card-body-color">
+                            <div className="d-flex justify-content-between align-items-center gap-2">
+                                <h6 className="text-light">{el.title}</h6>
+                                <h6 className={setVote(el.vote_average)}>{el.vote_average}</h6>
+                            </div>
+
+                            <div className="movie-over px-2">
+                                <h4>Overview</h4>
+                                <p>{el.overview}</p>
+                            </div>
+                        </Card.Body>
                     </Card>
                 ))}
             </div>

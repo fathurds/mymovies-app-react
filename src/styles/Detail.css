@@ -1,0 +1,15 @@
+.detail-image {
+    width: 400px;
+}
+
+@media only screen and (max-width: 420px) {
+    .detail-image {
+        width: 350px;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .detail-image {
+        width: 300px;
+    }
+}
