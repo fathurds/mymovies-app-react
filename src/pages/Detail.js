@@ -71,11 +71,11 @@ function Detail() {
 
     return (
         <Container>
-            <Row className="m-5">
+            <Row className="mt-4">
                 <Col lg="5" className="text-center">
                     <img src={"https://image.tmdb.org/t/p/w500" + dataDetail.poster_path} width={"400px"} alt="Poster"></img>
                 </Col>
-                <Col className="px-5">
+                <Col>
                     <h1>{dataDetail.title}</h1>
                     <hr></hr>
                     <h5>Genre : </h5>
@@ -116,7 +116,7 @@ function Detail() {
                 </Col>
             </Row>
             <h1>Recommendations</h1>
-            <div className="d-flex justify-content-around flex-wrap gap-3 mt-3">
+            <div className="justify-content-around flex-wrap gap-3 mt-3 list-dekstop">
                 {similarMovies.slice(0, 5).map((el, i) => (
                     <Card className="border-secondary movie" style={{ width: '15rem' }} key={i} onClick={() => {
                         dispacth(setDetail(el.title));
@@ -134,6 +134,17 @@ function Detail() {
                                 <p>{el.overview}</p>
                             </div>
                         </Card.Body>
+                    </Card>
+                ))}
+            </div>
+            <div className="justify-content-around flex-wrap gap-3 mt-3 list-mobile">
+                {similarMovies.slice(0, 5).map((el, i) => (
+                    <Card className="border-secondary movie" style={{ width: '10rem' }} key={i} onClick={() => {
+                        dispacth(setDetail(el.title));
+                        navigate('/detail/' + el.id);
+                    }} >
+                        <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + el.poster_path} />
+                        
                     </Card>
                 ))}
             </div>

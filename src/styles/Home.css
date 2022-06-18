@@ -23,3 +23,21 @@
 .movie:hover .movie-over {
     transform: translateY(0%);
 }
+
+.list-mobile {
+    display: none;
+}
+
+.list-dekstop {
+    display: flex;
+}
+
+@media only screen and (max-width: 519px) {
+    .list-dekstop {
+        display: none;
+    }
+
+    .list-mobile {
+        display: flex;
+    }
+}
