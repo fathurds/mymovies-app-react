@@ -12,17 +12,16 @@ import { setPosts } from "./store/posts"
 
 // SUDAH BENAR
 function App() {
-  // const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispact = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(true);
 
     axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=fe9c2107e7e76afb20fd484f3d893e7f&language=en-US&page=1')
       .then(data => {
-        dispact(setPosts(data.data.results));
+        dispatch(setPosts(data.data.results));
       })
       .catch(err => {
         console.log(err, 'ini error dari catch');
@@ -31,7 +30,7 @@ function App() {
         setIsLoading(false)
       });
 
-  }, [dispact])
+  }, [dispatch])
 
   return (
     <BrowserRouter>

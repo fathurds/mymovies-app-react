@@ -6,6 +6,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    width: 15rem;
 }
 
 .movie-over-favorites {
@@ -21,4 +22,10 @@
 
 .movie-favorites:hover .movie-over-favorites {
     transform: translateY(-20%);
+}
+
+@media only screen and (max-width: 519px) {
+    .movie-favorites {
+        width: 11rem;
+    }
 }
